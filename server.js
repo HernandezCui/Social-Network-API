@@ -17,3 +17,10 @@ mongoose.connect(dbUri, {
     useUnifiedTopology: true,
     useCreateIndex: true,
 });
+mongoose.set('debug', true);
+
+// Routes
+app.use(require('./routes'));
+
+// Server Start
+app.listen(PORT, () => console.log(`🌍 Server is running on localhost:${PORT}`));

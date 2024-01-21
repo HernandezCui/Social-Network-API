@@ -38,4 +38,13 @@ userSchema.virtual('friendCount').get(function () {
     return this.friends.length;
 });
 
-
+// Custom pre-delete hook to delete associated thoughts
+userSchema.pre('findOneAndDelete', async function () {
+    console.log('User pre-delete');
+    const user = await this.model.findOne(this.getFilter());
+    console.log(`Deleting thoughts of user: ${user.username}`);
+    await Thought.deleteMany({ username: user.username });
+  });
+  
+  const User = model('User', userSchema);
+  module.exports = User;

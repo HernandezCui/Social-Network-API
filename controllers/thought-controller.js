@@ -50,3 +50,28 @@ const thoughtController = {
       })
       .catch((err) => res.status(400).json(err));
   },
+
+  removeThought({ params }, res) {
+    Thought.findByIdAndRemove(params.thoughtId)
+      .then((thought) =>
+        User.findOneAndUpdate(
+          { _id: thought.userId },
+          { $pull: { thoughts: params.thoughtId } },
+          { new: true }
+        )
+      )
+      .then((user) => res.json(user))
+      .catch((err) => res.json(err));
+  },
+
+  addReaction({ params, body }, res) {
+    Thought.findByIdAndUpdate(
+      params.thoughtId,
+      { $push: { reactions: body } },
+      { new: true, runValidators: true }
+    )
+      .then((thought) => res.json(thought))
+      .catch((err) => res.json(err));
+  },
+
+  

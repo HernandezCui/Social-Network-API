@@ -75,7 +75,22 @@ deleteUser({ params }, res) {
       });
   },
 
-  
+// POST to add new friend to user's friend list
+addFriend({ params, body }, res) {
+    User.findOneAndUpdate(
+      { _id: params.userId },
+      { $push: { friends: params.friendId } },
+      { new: true, runValidators: true }
+    )
+      .then((dbUserData) => {
+        if (!dbUserData) {
+          res.status(404).json({ message: "No user found with this id!" });
+          return;
+        }
+        res.json(dbUserData);
+      })
+      .catch((err) => res.json(err));
+  },
 
 
 

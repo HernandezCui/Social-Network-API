@@ -22,4 +22,17 @@ const thoughtController = {
       .catch((err) => res.status(400).json(err));
   },
 
+  addThought({ body }, res) {
+    Thought.create(body)
+      .then(({ _id }) =>
+        User.findOneAndUpdate(
+          { _id: body.userId },
+          { $push: { thoughts: _id } },
+          { new: true }
+        )
+      )
+      .then((user) => res.json(user))
+      .catch((err) => res.json(err));
+  },
+
   

@@ -9,4 +9,17 @@ const thoughtController = {
       .catch((err) => res.status(400).json(err));
   },
 
+  getThoughtById({ params }, res) {
+    Thought.findById(params.thoughtId)
+      .populate("userId")
+      .then((thought) => {
+        if (!thought) {
+          res.status(404).json({ message: "No thought found by that id!" });
+          return;
+        }
+        res.json(thought);
+      })
+      .catch((err) => res.status(400).json(err));
+  },
+
   

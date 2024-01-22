@@ -11,7 +11,7 @@ const userController = {
         res.status(500).json(err);
       });
   },
-  
+
 // GET single user by _id and populated thought and friend data
 getUserById({ params }, res) {
     User.findOne({ _id: params.userId })
@@ -35,6 +35,12 @@ getUserById({ params }, res) {
       });
   },
 
+  // POST new user
+  createUser({ body }, res) {
+    User.create(body)
+      .then((dbUserData) => res.json(dbUserData))
+      .catch((err) => res.status(400).json(err));
+  },
 
 
 

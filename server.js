@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 // Database connection 
-const dbUri = process.env.MONGODB_URI || "mongodb://localhost/social-network-api";
+const dbUri = process.env.MONGODB_URI || "mongodb+srv://hernandezcui:r9kONgaJFv3vLA2U@cluster0.uebkvjl.mongodb.net/?retryWrites=true&w=majority";
 mongoose.connect(dbUri, {
     // useFindAndModify: false,
     useNewUrlParser: true,

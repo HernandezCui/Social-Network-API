@@ -1,22 +1,20 @@
 const express = require('express');
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
+const apiRoutes = require('./routes/apiRoutes');
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
+app.use('/api', apiRoutes);
 
-
-const uri = "mongodb+srv://hernandezcui:r9kONgaJFv3vLA2U@cluster0.uebkvjl.mongodb.net/?retryWrites=true&w=majority";
-
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log("MongoDB connected"))
-    .catch(err => console.log(err));
-
-mongoose.set("debug", true);
-
-app.use(require('./routes'));   
-
-app.listen(PORT, () => console.log(`🌍 Connected on localhost:${PORT}`));
+mongoose.connect('mongodb:', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}).then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });
+}).catch(err => {
+  console.error('MongoDB connection error:', err);
+});

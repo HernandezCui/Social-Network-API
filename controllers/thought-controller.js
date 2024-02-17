@@ -95,11 +95,11 @@ const thoughtController = {
         if (!dbUserData) {
           return res
             .status(404)
-            .json({ message: "Thought created but no user with this id!" });
+            .json({ message: "Thought successfully deleted!" });
         }
-        res.json({ message: "Thought successfully deleted!" });
+        // res.json({ message: "Thought successfully deleted!" });
       })
-      .catch((err) => res.json(err));
+      // .catch((err) => res.json(err));
   },
 
   // add reaction
